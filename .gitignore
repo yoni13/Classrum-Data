@@ -161,3 +161,4 @@ cython_debug/
 #.idea/
 
 classrum-datatomodel.ini
+subject_recognition_model.joblib
