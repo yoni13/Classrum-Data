@@ -1,6 +1,6 @@
 import numpy as np
 from pymongo import MongoClient
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
@@ -21,8 +21,9 @@ for document in collection.find():
     data.append(document['name'])
     labels.append(document['subject'])
 
-# 特徵工程，這裡使用TF-IDF向量化
-vectorizer = TfidfVectorizer()
+
+# 特徵工程，這裡使用Count向量化
+vectorizer = CountVectorizer(stop_words = None)
 X = vectorizer.fit_transform(data)
 
 # 切割數據集
