@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 import configparser
 config = configparser.ConfigParser()
 config.read('classrum-datatomodel.ini')
-
+import jieba
 
 # 連接到MongoDB
 client = MongoClient(config['MONGODB']['ServerAddress'])
@@ -21,9 +21,17 @@ for document in collection.find():
     data.append(document['name'])
     labels.append(document['subject'])
 
+# Takes in a document, separates the words
+def tokenize_zh(text):
+    words = jieba.lcut(text)
+    return words
+
+# Add a custom list of stopwords for punctuation
+stop_words = ['。', '，']
+
 
 # 特徵工程，這裡使用Count向量化
-vectorizer = CountVectorizer(stop_words = None)
+vectorizer = CountVectorizer(tokenizer=tokenize_zh,stop_words = stop_words)
 X = vectorizer.fit_transform(data)
 
 # 切割數據集
