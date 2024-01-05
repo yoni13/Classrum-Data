@@ -1,3 +1,4 @@
 scikit-learn
 pymongo
 numpy
+git+https://github.com/APCLab/jieba-tw.git

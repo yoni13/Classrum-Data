@@ -7,7 +7,8 @@ from sklearn.metrics import accuracy_score
 import configparser
 config = configparser.ConfigParser()
 config.read('classrum-datatomodel.ini')
-import jieba
+import jieba,sys
+from joblib import dump, load
 
 # 連接到MongoDB
 client = MongoClient(config['MONGODB']['ServerAddress'])
@@ -46,10 +47,17 @@ y_pred = clf.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("模型準確度:", accuracy)
 
+try:
+    if sys.argv[1] == 'build':
+        dump(clf, 'subject_recognition_model.joblib')
+        dump(vectorizer, 'subject_reconition_vec.joblib')
+        sys.exit()
+except IndexError:
+    pass
+
 
 # 部署模型，可以保存模型以供以後使用
 if input('保存模型嗎？請回y \n') == 'y':
-    from joblib import dump, load
     dump(clf, 'subject_recognition_model.joblib')
     dump(vectorizer, 'subject_reconition_vec.joblib')
 
@@ -59,6 +67,10 @@ while True:
     new_data_vectorized = vectorizer.transform(new_data)
     predicted_subject = clf.predict(new_data_vectorized)
     print(predicted_subject)
+
+
+
+
 
 
 
