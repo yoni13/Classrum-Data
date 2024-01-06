@@ -10,6 +10,7 @@ build:
   script:
     - curl --silent "https://gitlab.com/yoni980807/download-secure-files/-/raw/yoni980807-main-patch-48835/installer" | bash
     - pip3 install -r requirements.txt --no-cache-dir
+    - python3 add-to-db.py build
     - python3 main.py build
   artifacts:
     paths:
