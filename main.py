@@ -6,7 +6,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import configparser
 config = configparser.ConfigParser()
-config.read('classrum-datatomodel.ini')
+config.read('classrum.ini')
 import jieba,sys
 from joblib import dump, load
 
