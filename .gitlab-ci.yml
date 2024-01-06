@@ -12,9 +12,12 @@ build:
     - pip3 install -r requirements.txt --no-cache-dir
     - python3 add-to-db.py build
     - python3 main.py build
+    - md5sum subject_reconition_vec.joblib > md5sum4vec.txt
+    - md5sum subject_recognition_model.joblib > md5sum4model.txt
   artifacts:
     paths:
       - subject_recognition_model.joblib
       - subject_reconition_vec.joblib
-    expire_in: 1 month
+      - md5sum4vec.txt
+      - md5sum4model.txt
 

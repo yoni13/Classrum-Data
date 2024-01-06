@@ -163,3 +163,7 @@ cython_debug/
 classrum-datatomodel.ini
 subject_recognition_model.joblib
 classrum.ini
+
+
+md5sums.txt
+subject_reconition_vec.joblib
