@@ -9,7 +9,7 @@ build:
         SECURE_FILES_DOWNLOAD_PATH: '.'
   script:
     - apt-get update
-    - apt-get install curl python3-pip -y
+    - apt-get install curl python3-pip git -y
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - pip3 install -r requirements.txt --no-cache-dir
     - python3 add-to-db.py build
