@@ -9,7 +9,7 @@ build:
         SECURE_FILES_DOWNLOAD_PATH: '.'
   script:
     - apt-get update
-    - apt-get install curl python3-pip git -y --no-install-recommends
+    - apt-get install curl python3-pip git sudo -y --no-install-recommends
     - chmod +x setupdocker.sh
     - ./setupdocker.sh
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
