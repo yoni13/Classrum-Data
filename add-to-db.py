@@ -1,13 +1,10 @@
 import time,os,sys
 
-#import config parser
-import configparser
-config = configparser.ConfigParser()
-config.read('classrum.ini')
+config = os.environ
 
 # init connect to mogodb
 import pymongo
-dbclient = pymongo.MongoClient(config['MONGODB']['ServerAddress']) # get db address from config
+dbclient = pymongo.MongoClient(config['MONGODB']) # get db address from config
 dbdatabase = dbclient["traindata"]
 TrainColumn = dbdatabase["train"]
 

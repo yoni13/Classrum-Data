@@ -1,17 +1,17 @@
 import numpy as np
+import os
 from pymongo import MongoClient
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import configparser
-config = configparser.ConfigParser()
-config.read('classrum.ini')
+config = os.environ
 import jieba,sys
 from joblib import dump, load
 
 # 連接到MongoDB
-client = MongoClient(config['MONGODB']['ServerAddress'])
+client = MongoClient(config['MONGODB'])
 db = client['traindata']
 collection = db['train']
 
