@@ -5,7 +5,7 @@ build:
   stage: build
   tags: 
     - build-model
-  image: python3.11-alpine
+  image: python:3.11-alpine
   script:
     - pip3 install -r requirements.txt --no-cache-dir
     - python3 add-to-db.py build
