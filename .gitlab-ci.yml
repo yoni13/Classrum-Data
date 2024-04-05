@@ -7,6 +7,7 @@ build:
     - build-model
   image: python:3.11-alpine
   script:
+    - apk add git
     - pip3 install -r requirements.txt --no-cache-dir
     - python3 add-to-db.py build
     - python3 main.py build
