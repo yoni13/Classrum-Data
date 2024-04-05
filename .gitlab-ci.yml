@@ -7,7 +7,7 @@ build:
     - build-model
   image: python:3.11-bullseye
   script:
-    - sudo apt-get update && apt-get install git build-essential -y --no-install-recommends
+    - apt-get update && apt-get install git build-essential -y --no-install-recommends
     - pip3 install -r requirements.txt --no-cache-dir
     - python3 add-to-db.py build
     - python3 main.py build
