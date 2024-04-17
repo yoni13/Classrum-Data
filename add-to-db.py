@@ -3,10 +3,10 @@ import time,os,sys
 config = os.environ
 
 # init connect to mogodb
-import pymongo
-dbclient = pymongo.MongoClient(config['MONGODB']) # get db address from config
-dbdatabase = dbclient["traindata"]
-TrainColumn = dbdatabase["train"]
+# import pymongo
+# dbclient = pymongo.MongoClient(config['MONGODB']) # get db address from config
+# dbdatabase = dbclient["traindata"]
+# TrainColumn = dbdatabase["train"]
 
 
 TrainColumn.delete_many({})
@@ -28,8 +28,8 @@ def checkinline(TheDict, TheLine): # if this string is in the dict, return true
 
 def DoCheckInLine(TheDict,line,SubjectNum,TrainColumn): # if the string is in the dict, add to db
    if checkinline(TheDict,line):
-        data = {"name": line.replace('\n','') , "subject" : SubjectNum}
-        TrainColumn.insert_one(data)
+        # data = {"name": line.replace('\n','') , "subject" : SubjectNum}
+        # TrainColumn.insert_one(data)
         cursorObj.execute("INSERT INTO subjects VALUES(" + line.replace('\n','') + str(SubjectNum) + ")")
         con.commit()
         return True

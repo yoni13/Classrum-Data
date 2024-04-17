@@ -11,16 +11,16 @@ import jieba,sys
 from joblib import dump, load
 
 # 連接到MongoDB
-client = MongoClient(config['MONGODB'])
-db = client['traindata']
-collection = db['train']
+# client = MongoClient(config['MONGODB'])
+# db = client['traindata']
+# collection = db['train']
 
 # 讀取資料並處理
 data = []
 labels = []
-for document in collection.find():
-    data.append(document['name'])
-    labels.append(document['subject'])
+# for document in collection.find():
+#     data.append(document['name'])
+#     labels.append(document['subject'])
 
 # Takes in a document, separates the words
 def tokenize_zh(text):
