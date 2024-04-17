@@ -12,6 +12,13 @@ TrainColumn = dbdatabase["train"]
 TrainColumn.delete_many({})
 
 
+import sqlite3
+con = sqlite3.connect('subject.db')
+cursorObj = con.cursor()
+
+cur.execute("CREATE TABLE subjects(subjectname,subjectnum)")
+con.commit()
+
 
 def checkinline(TheDict, TheLine): # if this string is in the dict, return true
     for i in range(len(TheDict)):
@@ -21,11 +28,13 @@ def checkinline(TheDict, TheLine): # if this string is in the dict, return true
 
 def DoCheckInLine(TheDict,line,SubjectNum,TrainColumn): # if the string is in the dict, add to db
    if checkinline(TheDict,line):
-       data = {"name": line.replace('\n','') , "subject" : SubjectNum}
-       TrainColumn.insert_one(data)
-       return True
+        data = {"name": line.replace('\n','') , "subject" : SubjectNum}
+        TrainColumn.insert_one(data)
+        cursorObj.execute("INSERT INTO subjects VALUES(" + line.replace('\n','') + str(SubjectNum) + ")")
+        con.commit()
+        return True
    else:
-       return False
+        return False
 
 def DoAllCheckInL(line,AllDicts,TrainColumn,AllSubjectNum): # testing all subject dicts
     theround = 0
@@ -98,3 +107,5 @@ with open('train.txt', 'r',encoding="utf-8") as file:
         data = { "name" : line.replace('\n','') , "subject" : response }
         TrainColumn.insert_one(data)
         print(data)
+
+con.close()

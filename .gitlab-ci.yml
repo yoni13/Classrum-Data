@@ -19,4 +19,5 @@ build:
       - subject_reconition_vec.joblib
       - md5sum4vec.txt
       - md5sum4model.txt
+      - subject.db
 
