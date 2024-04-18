@@ -3,13 +3,13 @@ stages:
 
 build:
   stage: build
-  tags: 
+  tags:
     - build-model
   image: python:3.11-bullseye
   script:
     - apt-get update && apt-get install git build-essential -y --no-install-recommends
     - pip3 install -r requirements.txt --no-cache-dir
-    - python3 add-to-db.py build
+    - python3 add-to-db.py
     - python3 main.py build
     - md5sum subject_reconition_vec.joblib | awk '{print $1}' > md5sum4vec.txt
     - md5sum subject_recognition_model.joblib  | awk '{print $1}' > md5sum4model.txt

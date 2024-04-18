@@ -1,20 +1,8 @@
-import time,os,sys
-
-config = os.environ
-
-# init connect to mogodb
-# import pymongo
-# dbclient = pymongo.MongoClient(config['MONGODB']) # get db address from config
-# dbdatabase = dbclient["traindata"]
-# TrainColumn = dbdatabase["train"]
-
-
-TrainColumn.delete_many({})
-
+import time,os,sys,tqdm
 
 import sqlite3
 con = sqlite3.connect('subject.db')
-cursorObj = con.cursor()
+cur = con.cursor()
 
 cur.execute("CREATE TABLE subjects(subjectname,subjectnum)")
 con.commit()
@@ -26,20 +14,22 @@ def checkinline(TheDict, TheLine): # if this string is in the dict, return true
             return True
     return False
 
-def DoCheckInLine(TheDict,line,SubjectNum,TrainColumn): # if the string is in the dict, add to db
+def DoCheckInLine(TheDict,line,SubjectNum): # if the string is in the dict, add to db
    if checkinline(TheDict,line):
-        # data = {"name": line.replace('\n','') , "subject" : SubjectNum}
-        # TrainColumn.insert_one(data)
-        cursorObj.execute("INSERT INTO subjects VALUES(" + line.replace('\n','') + str(SubjectNum) + ")")
+        line = line.replace('\n','')
+        SubjectNum = str(SubjectNum)
+        params = (line,SubjectNum)
+        execstr = f"INSERT INTO subjects VALUES(?,?)"
+        cur.execute(execstr,params)
         con.commit()
         return True
    else:
         return False
 
-def DoAllCheckInL(line,AllDicts,TrainColumn,AllSubjectNum): # testing all subject dicts
+def DoAllCheckInL(line,AllDicts,AllSubjectNum): # testing all subject dicts
     theround = 0
     for littleDict in AllDicts:
-        if DoCheckInLine(littleDict,line,AllSubjectNum[theround],TrainColumn):
+        if DoCheckInLine(littleDict,line,AllSubjectNum[theround]):
             return True
         else:
             theround += 1
@@ -90,22 +80,9 @@ AllDicts = [EnglishDict,ChineseDict,GeographyDict,HouseThingDict,CivisDict,Sport
 AllSubjectNum = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"]
 
 with open('train.txt', 'r',encoding="utf-8") as file:
-    for line in file:
-        if DoAllCheckInL(line,AllDicts,TrainColumn,AllSubjectNum):
+    for line in tqdm.tqdm(file):
+        if DoAllCheckInL(line,AllDicts,AllSubjectNum):
             continue
-
-        # check if the tag 'build' is there
-        try:
-             if sys.argv[1] == 'build':
-                 print(line.replace('\n','')+ ' is passed because we wre running in build env.')
-                 continue
-        except IndexError:
-                 pass
-
-        print(helpful_info)
-        response = input(line)
-        data = { "name" : line.replace('\n','') , "subject" : response }
-        TrainColumn.insert_one(data)
-        print(data)
+        print(line.replace('\n','')+ ' is passed because its not in the described data.')
 
 con.close()
