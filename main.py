@@ -1,6 +1,7 @@
 import numpy as np
+import sqlite3
 import os
-from pymongo import MongoClient
+# from pymongo import MongoClient
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -10,17 +11,17 @@ config = os.environ
 import jieba,sys
 from joblib import dump, load
 
-# 連接到MongoDB
-# client = MongoClient(config['MONGODB'])
-# db = client['traindata']
-# collection = db['train']
+con = sqlite3.connect('subject.db')
+cur = con.cursor()
+
+cur.execute("SELECT * FROM subjects")
 
 # 讀取資料並處理
 data = []
 labels = []
-# for document in collection.find():
-#     data.append(document['name'])
-#     labels.append(document['subject'])
+for document in cur.fetchall():
+    data.append(document[0])
+    labels.append(document[1])
 
 # Takes in a document, separates the words
 def tokenize_zh(text):
