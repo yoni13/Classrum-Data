@@ -2,3 +2,5 @@ scikit-learn
 numpy
 git+https://github.com/APCLab/jieba-tw.git
 tqdm
+rknn-toolkit2==2.3.0
+onnx

@@ -168,3 +168,5 @@ classrum.ini
 md5sums.txt
 subject_reconition_vec.joblib
 subject.db
+clf.rknn
+clf.rknn.json
